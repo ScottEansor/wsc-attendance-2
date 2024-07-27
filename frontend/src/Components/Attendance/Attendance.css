@@ -1,0 +1,19 @@
+.date-display-container {
+    margin-top: 20px;
+  }
+  
+  .datepicker-calendar {
+    width: 100%;
+  }
+  
+  .datepicker-wrapper {
+    display: inline-block;
+  }
+  
+  .btn-light {
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    background: none;
+  }
+  
