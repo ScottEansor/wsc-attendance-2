@@ -1,3 +1,4 @@
+/* Date Display */
 .date-display-container {
     margin-top: 20px;
   }
@@ -15,5 +16,29 @@
     font-weight: bold;
     border: none;
     background: none;
+  }
+  
+/* Coach Display */
+.coach-display-container {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .coach-select {
+    margin-bottom: 20px;
+  }
+  
+  .coach-select.selected {
+    background-color: #f0f8ff;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .coach-details {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 10px;
   }
   
