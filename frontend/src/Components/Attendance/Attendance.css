@@ -25,20 +25,20 @@
   }
   
   .coach-select {
-    margin-bottom: 20px;
-  }
-  
-  .coach-select.selected {
-    background-color: #f0f8ff;
-    border: 2px solid #007bff;
-    border-radius: 5px;
+    display: inline-block;
     padding: 10px;
-  }
-  
-  .coach-details {
-    background-color: #e9ecef;
     border: 1px solid #ced4da;
     border-radius: 5px;
-    padding: 10px;
+    background-color: #4a6885;
+    width: 80%;
   }
   
+
+  
+  .coach-select-dropdown {
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: inherit;
+    cursor: pointer;
+  }

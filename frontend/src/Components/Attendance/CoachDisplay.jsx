@@ -2,41 +2,31 @@ import React, { useState } from "react";
 import "./Attendance.css";
 
 export default function CoachDisplay() {
-  const [selectedCoach, setSelectedCoach] = useState("Choose Coach");
+  const [selectedCoach, setSelectedCoach] = useState("");
 
   const testCoaches = ["Coach Tony", "Coach Andy", "Coach Scotty"];
 
   function handleChange(event) {
     setSelectedCoach(event.target.value);
   }
-  return (
-    <>
-      <div className="coach-display-container">
-        <div className={`coach-select ${selectedCoach ? "selected" : ""}`}>
-          {/* what is htmlfor??? */}
-          <label htmlFor="coach-select">Choose Coach:</label>
-          <select
-            id="coach-select"
-            value={selectedCoach}
-            onChange={handleChange}
-          >
-            <option value="">Select a coach</option>
-            {testCoaches.map((coach) => (
-              <option key={coach} value={coach}>
-                {coach}
-              </option>
-            ))}
-          </select>
-        </div>
 
-        {selectedCoach && (
-          <div className="coach-details">
-            <h2>{selectedCoach}</h2>
-            <p>Details about {selectedCoach}</p>
-          </div>
-        )}
+  return (
+    <div className="coach-display-container">
+      <div className="coach-select">
+        <select
+          id="coach-select"
+          value={selectedCoach}
+          onChange={handleChange}
+          className="coach-select-dropdown"
+        >
+          <option value="">{selectedCoach || "Choose Coach"}</option>
+          {testCoaches.map((coach) => (
+            <option key={coach} value={coach}>
+              {coach}
+            </option>
+          ))}
+        </select>
       </div>
-      {/* review last chatgpt question */}
-    </>
+    </div>
   );
 }
