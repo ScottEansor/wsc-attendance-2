@@ -1,22 +1,22 @@
 /* Date Display */
+
 .date-display-container {
-    margin-top: 20px;
-  }
-  
-  .datepicker-calendar {
-    width: 100%;
-  }
-  
-  .datepicker-wrapper {
-    display: inline-block;
-  }
-  
-  .btn-light {
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    background: none;
-  }
+  text-align: center;
+  margin: 20px;
+}
+
+.date-picker-input {
+  font-size: 16px;
+  padding: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+.selected-date {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
   
 /* Coach Display */
 .coach-display-container {
@@ -42,3 +42,23 @@
     font-weight: inherit;
     cursor: pointer;
   }
+/* Athlete Select */
+.athlete-list-container {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.search-bar {
+  text-align: center;
+}
+
+.absent-list,
+.present-list {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.absent-list h3,
+.present-list h3 {
+  text-align: center;
+}

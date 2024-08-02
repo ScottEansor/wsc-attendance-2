@@ -1,7 +1,24 @@
-import React, { useState, forwardRef } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import React, { useState } from "react";
 import "./Attendance.css";
 
-//ask Tim about forward ref here
-export default function DateDisplay() {}
+//remove date picker from dependancies
+export default function DateDisplay() {
+  const [selectedDate, setSelectedDate] = useState("");
+
+  const handleDateChange = (e) => {
+    setSelectedDate(e.target.value);
+  };
+
+  return (
+    <div className="date-display-container">
+      <label htmlFor="date-picker">Choose Date:</label>
+      <input
+        type="date"
+        id="date-picker"
+        value={selectedDate}
+        onChange={handleDateChange}
+        className="date-picker-input"
+      />
+    </div>
+  );
+}
