@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import "./Attendance.css";
 
 //remove date picker from dependancies
-export default function DateDisplay() {
+export default function DateDisplay({ onDateChange }) {
   const [selectedDate, setSelectedDate] = useState("");
 
   const handleDateChange = (e) => {
     setSelectedDate(e.target.value);
+    onDateChange(e.target.value);
   };
 
   return (
