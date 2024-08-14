@@ -12,8 +12,7 @@ export default function CoachDisplay() {
 
   return (
     //____________________this still need work. div isnt clickable. only drop down is, this can be confusing. Also need to eliminate/make better display for when coach is picked. Get functionallity and understanding first.
-    <div className="coach-display-container">
-      <div className="coach-select">
+
         <select
           id="coach-select"
           value={selectedCoach}
@@ -27,7 +26,6 @@ export default function CoachDisplay() {
             </option>
           ))}
         </select>
-      </div>
-    </div>
+
   );
 }

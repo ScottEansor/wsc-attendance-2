@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import "./Attendance.css";
 
 export default function AthleteSelect() {
@@ -13,14 +13,18 @@ export default function AthleteSelect() {
   };
 
   function handlePresent(clickedAthlete) {
-    setAbsentAthletes(
-      absentAthletes.filter((absentAthlete) => absentAthlete !== clickedAthlete)
+    setAbsentAthletes((currentAbsent) =>
+      currentAbsent.filter((absentAthlete) => absentAthlete !== clickedAthlete)
     );
-    setPresentAthletes([...presentAthletes, clickedAthlete]);
+    setPresentAthletes((currentPresent) => [...currentPresent, clickedAthlete]);
   }
 
-  const filteredAthletes = absentAthletes.filter((athlete) =>
-    athlete.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredAthletes = useMemo(
+    () =>
+      absentAthletes.filter((athlete) =>
+        athlete.toLowerCase().includes(searchTerm.toLowerCase())
+      ),
+    [absentAthletes, searchTerm]
   );
 
   return (

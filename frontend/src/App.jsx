@@ -1,5 +1,5 @@
 import NavBar from "./Components/NavBar.jsx";
-import Attendance from "./Components/Attendance/Attendance.jsx";
+import Attendance from "./Components/Attendance.jsx";
 
 function App() {
   return (
