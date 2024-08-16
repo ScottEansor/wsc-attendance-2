@@ -5,11 +5,11 @@ import AthleteReview from "./AthleteReview";
 
 // Sample data (This would normally come from a backend or state)
 const testAthletes = [
-  { name: "Tyson", coach: "Coach Tony", date: "2024-08-01", present: true },
-  { name: "Winston", coach: "Coach Andy", date: "2024-08-01", present: false },
-  { name: "Grayson", coach: "Coach Tony", date: "2024-08-01", present: true },
-  { name: "Theo", coach: "Coach Scotty", date: "2024-08-01", present: false },
-  { name: "Stevey", coach: "Coach Tony", date: "2024-08-01", present: true },
+  { name: "Tyson", coach: "Coach Tony", date: "2024-08-01" },
+  { name: "Winston", date: "2024-08-01" },
+  { name: "Grayson", coach: "Coach Tony", date: "2024-08-01" },
+  { name: "Theo", date: "2024-08-01" },
+  { name: "Stevey", coach: "Coach Tony", date: "2024-08-01" },
 ];
 
 export default function CoachReview() {
@@ -20,20 +20,21 @@ export default function CoachReview() {
   const filteredAthletes = testAthletes.filter(
     (athlete) =>
       athlete.date === selectedDate &&
-      (!selectedCoach || athlete.coach === selectedCoach)
+      (!selectedCoach || !athlete.coach || athlete.coach === selectedCoach)
   );
 
-  const absentAthletes = filteredAthletes.filter(
-    (athlete) => athlete.present === false
-  );
-  const presentAthletes = filteredAthletes.filter(
-    (athlete) => athlete.present === true
-  );
+  const absentAthletes = filteredAthletes.filter((athlete) => !athlete.coach);
+  const presentAthletes = filteredAthletes.filter((athlete) => athlete.coach);
 
   return (
     <div>
       <DateDisplay onDateChange={setSelectedDate} />
-      {<CoachDisplay onCoachChange={setSelectedCoach} />}
+      {
+        <CoachDisplay
+          onCoachChange={setSelectedCoach}
+          selectedCoach={selectedCoach}
+        />
+      }
       {/* Only render AthleteReview if a date is selected */}
       {selectedDate && (
         <AthleteReview

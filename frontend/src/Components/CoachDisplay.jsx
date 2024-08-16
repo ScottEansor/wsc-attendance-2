@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import "./Attendance.css";
 
-export default function CoachDisplay() {
-  const [selectedCoach, setSelectedCoach] = useState("");
-
+export default function CoachDisplay({ onCoachChange, selectedCoach }) {
   const testCoaches = ["Coach Tony", "Coach Andy", "Coach Scotty"];
 
-  function handleChange(e) {
-    setSelectedCoach(e.target.value);
+  function handleCoachSelectChange(e) {
     onCoachChange(e.target.value);
   }
 
@@ -17,10 +14,10 @@ export default function CoachDisplay() {
     <select
       id="coach-select"
       value={selectedCoach}
-      onChange={handleChange}
+      onChange={handleCoachSelectChange}
       className="coach-select-dropdown"
     >
-      <option value="">{selectedCoach || "Choose Coach"}</option>
+      <option value="">{"Choose Coach"}</option>
       {testCoaches.map((coach) => (
         <option key={coach} value={coach}>
           {coach}
