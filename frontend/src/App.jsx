@@ -5,8 +5,8 @@ import CoachReview from "./Components/CoachReview.jsx";
 function App() {
   return (
     <>
-      {/* <Attendance /> */}
-      <CoachReview></CoachReview>
+      <Attendance />
+      {/* <CoachReview></CoachReview> */}
       <NavBar />
     </>
   );

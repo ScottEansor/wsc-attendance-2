@@ -1,30 +1,26 @@
 import React, { useState, useMemo } from "react";
 import "./Attendance.css";
 
-export default function AthleteSelect() {
+export default function AthleteSelect({ presentAthletes, setPresentAthletes }) {
   const athletes = ["Tyson", "Winston", "Grayson", "Theo", "Stevey"];
   const [searchTerm, setSearchTerm] = useState("");
-  const [absentAthletes, setAbsentAthletes] = useState(athletes);
-  const [presentAthletes, setPresentAthletes] = useState([]);
-
   // functions
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
 
   function handlePresent(clickedAthlete) {
-    setAbsentAthletes((currentAbsent) =>
-      currentAbsent.filter((absentAthlete) => absentAthlete !== clickedAthlete)
-    );
     setPresentAthletes((currentPresent) => [...currentPresent, clickedAthlete]);
   }
 
   const filteredAthletes = useMemo(
     () =>
-      absentAthletes.filter((athlete) =>
-        athlete.toLowerCase().includes(searchTerm.toLowerCase())
+      athletes.filter(
+        (athlete) =>
+          !presentAthletes.includes(athlete) &&
+          athlete.toLowerCase().includes(searchTerm.toLowerCase())
       ),
-    [absentAthletes, searchTerm]
+    [athletes, searchTerm, presentAthletes]
   );
 
   return (
@@ -67,9 +63,6 @@ export default function AthleteSelect() {
             ))}
           </ul>
         </div>
-      </div>
-      <div className="d-flex justify-content-center mt-3">
-        <button className="btn btn-primary w-100">Submit</button>
       </div>
     </div>
   );

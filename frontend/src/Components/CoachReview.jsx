@@ -28,7 +28,7 @@ export default function CoachReview() {
 
   return (
     <div>
-      <DateDisplay onDateChange={setSelectedDate} />
+      <DateDisplay onDateChange={setSelectedDate} selectedDate={selectedDate} />
       {
         <CoachDisplay
           onCoachChange={setSelectedCoach}
