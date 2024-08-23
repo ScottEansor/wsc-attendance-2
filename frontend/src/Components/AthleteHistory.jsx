@@ -14,8 +14,24 @@ const testAthletes = [
 ];
 
 export default function AthleteHistory() {
+  //test make sure data collection correct with Tim
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedAthlete, setSelectedAthlete] = useState("");
+  const [absentAthleteCount, setAbsentAthleteCount] = useState(0);
+
+  function displayAthleteHistory(selectedAthlete) {
+    let counter = 0;
+    // Loop through testAthletes to compare names and check if the athlete has a coach
+    testAthletes.forEach((testAthlete) => {
+      if (
+        testAthlete.name.toLowerCase() === selectedAthlete.toLowerCase() &&
+        !testAthlete.coach
+      ) {
+        counter++;
+      }
+    });
+    setAbsentAthleteCount(counter);
+  }
 
   const filteredAthletes = useMemo(
     () => [
@@ -37,6 +53,12 @@ export default function AthleteHistory() {
     }
   }, [filteredAthletes]);
 
+  useEffect(() => {
+    if (selectedAthlete) {
+      displayAthleteHistory(selectedAthlete);
+    }
+  }, [selectedAthlete]);
+
   return (
     <div>
       <input
@@ -56,6 +78,17 @@ export default function AthleteHistory() {
           return <option key={athlete}>{athlete}</option>;
         })}
       </select>
+      {selectedAthlete && (
+        <div>
+          {absentAthleteCount > 0 ? (
+            <p>
+              {selectedAthlete} has been absent {absentAthleteCount} times.
+            </p>
+          ) : (
+            <p>{selectedAthlete} has been present every day!</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
