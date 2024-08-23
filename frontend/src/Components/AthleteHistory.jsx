@@ -72,7 +72,7 @@ export default function AthleteHistory() {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <div>
+      <div className="">
         <select
           className="form-select"
           value={selectedAthlete}
