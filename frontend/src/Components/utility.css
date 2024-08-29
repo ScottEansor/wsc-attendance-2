@@ -1,0 +1,143 @@
+.utility{
+    background-color: ;
+}
+
+/* Custom styles for select with a bluish-grey background */
+.custom-select {
+    background-color: #7eafef !important; /* Bluish grey color */
+    font-weight: bold;
+    color: #000; /* Ensure text is readable */
+    text-align: center;
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Smooth rounded corners */
+  }
+  
+  /* Container for missed dates */
+  .days-missed-container {
+    background-color: #86a1b2; /* Container color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+    padding: 10px; /* Reduced padding for mobile */
+    border-radius: 5px; /* Rounded corners */
+    width: 100%;
+  }
+  
+  /* Dates list items */
+  .date-item {
+    text-align: left;
+    font-size: 0.9rem;
+    padding: 5px 0; /* Add padding for list items */
+  }
+  
+  /* Main container styling with a lighter background */
+  .main-container {
+    background-color: #e5e5e5; /* Light grey */
+    padding: 10px; /* Reduced padding for mobile */
+    display: flex; /* Flex alignment */
+    flex-direction: column; /* Column layout */
+    align-items: center; /* Center items */
+    justify-content: start; /* Align items at the start */
+  }
+  
+  /* Dates list container */
+  .dates-list-container {
+    background-color: #d3d3d3; /* Light grey */
+    padding: 10px; /* Reduced padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    align-self: flex-start; /* Align left */
+    width: 100%;
+    max-height: 120px; /* Set to a height that fits about 3 items */
+    overflow-y: auto; /* Enables vertical scrolling when content exceeds height */
+  }
+  
+  
+  /* Add Coach and Add Athlete containers */
+  .add-container {
+    background-color: #e5e5e5; /* Matching light grey */
+    padding: 10px; /* Small padding */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+    display: flex; /* Flex alignment */
+    align-items: center; /* Center items */
+    justify-content: space-between; /* Space between input and button */
+    width: 100%; /* Full width for mobile */
+    max-width: 400px; /* Contain within max width */
+  }
+  
+  /* Input styles */
+  input[type="text"] {
+    flex: 1; /* Takes available space */
+    padding: 8px; /* Smaller padding */
+    margin-right: 5px; /* Space between input and button */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #f5f5f5; /* Light grey background */
+    font-size: 0.9rem; /* Slightly smaller font */
+  }
+  
+  /* Button styles */
+  button {
+    background-color: #7eafef; /* Matches select */
+    color: #fff; /* White text */
+    border: none; /* No border */
+    padding: 8px 12px; /* Compact padding */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    font-size: 0.9rem; /* Smaller font for mobile */
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+  }
+  
+  /* Button hover effect */
+  button:hover {
+    background-color: #669ad9; /* Darker on hover */
+  }
+  
+  /* Missed Athletes container */
+.missed-container {
+    background-color: #d3d3d3; /* Matching light grey for consistency */
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Consistent shadow */
+    width: 100%;
+    max-width: 400px; /* Constrain width for a clean look */
+  }
+  
+  /* Header styling */
+  .missed-header {
+    background-color: #000000; /* Light red color */
+    background-color: #f08080;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px; /* Space below header */
+    border-radius: 10px;
+  }
+  
+  /* Missed athletes list styling */
+  .missed-list-container {
+    background-color: #d3d3d3; /* Same background as dates-list-container */
+    padding: 10px; /* Consistent padding */
+    border-radius: px;
+    max-height: 120px; /* Same max height to keep uniformity */
+    overflow-y: auto; /* Enable scroll if list exceeds height */
+
+  }
+  
+  /* List items */
+  .date-item {
+    text-align: left;
+    font-size: 0.9rem;
+    padding: 5px 0; /* Consistent padding for list items */
+  }
+
+  /* Apply a light grey background to the entire app */
+.app-container {
+    background-color: #e5e5e5; /* Light grey background */
+    min-height: 100vh; /* Ensures full height of the viewport */
+    width: 100%; /* Full width */
+    display: flex; /* Optional: Flex for layout control */
+    flex-direction: column; /* Column layout */
+    align-items: center; /* Center all content horizontally */
+    padding: 0; /* Remove any default padding */
+    margin: 0; /* Remove any default margin */
+  }
+  

@@ -25,8 +25,8 @@ export default function MissedAthletes({ history }) {
     return results;
   }, [history]);
   return (
-    <div>
-      <header>Missed 3 or More Days</header>
+    <div className="missed-container p-2">
+      <header className="missed-header">Missed 3 or More Days</header>
       <div>
         {threeOrMoreMissed.map((athlete) => {
           return <div key={athlete}>{athlete}</div>;

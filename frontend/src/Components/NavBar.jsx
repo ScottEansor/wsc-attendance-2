@@ -1,18 +1,19 @@
 import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap is imported
 
 export default function NavBar() {
   return (
     <>
-      <nav className="navbar navbar-light bg-light fixed-bottom bottom-nav">
+      <nav className="navbar navbar-dark bg-dark fixed-bottom bottom-nav">
         <div className="container-fluid d-flex justify-content-around">
-          <a href="#home" className="nav-item text-center">
-            <div>Home</div>
+          <a href="#home" className="nav-item text-center nav-link">
+            <div>Utility</div>
           </a>
-          <a href="#profile" className="nav-item text-center">
-            <div>Profile</div>
+          <a href="#profile" className="nav-item text-center nav-link">
+            <div>Attendance</div>
           </a>
-          <a href="#settings" className="nav-item text-center">
-            <div>Settings</div>
+          <a href="#settings" className="nav-item text-center nav-link">
+            <div>Coach Review</div>
           </a>
         </div>
       </nav>

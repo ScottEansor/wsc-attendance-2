@@ -5,12 +5,12 @@ import Utility from "./Components/Utility.jsx";
 
 function App() {
   return (
-    <>
-      <Utility />
+    <div className="app-container">
+      {/* <Utility /> */}
       {/* <Attendance /> */}
-      {/* <CoachReview></CoachReview> */}
+      <CoachReview></CoachReview>
       <NavBar />
-    </>
+    </div>
   );
 }
 

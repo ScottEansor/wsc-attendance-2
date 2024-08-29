@@ -1,21 +1,16 @@
+/* Custom styles for the bottom navigation */
 .bottom-nav {
-    height: 60px;
-  }
-  
-  .nav-item {
-    text-align: center;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-    text-decoration: none;
-    padding: 10px;
-    background-color: blueviolet;
-  }
-  
-  .nav-item div {
-    font-size: 10px;
-  }
-  
+  background-color: #343a40 !important; /* Darker background */
+  border-top: 1px solid #4a4a4a; /* Optional border for a sleek look */
+}
+
+/* Navbar links */
+.nav-link {
+  color: #ffffff !important; /* White text */
+  transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Hover effect for Navbar links */
+.nav-link:hover {
+  color: #007bff !important; /* Blue color on hover */
+}

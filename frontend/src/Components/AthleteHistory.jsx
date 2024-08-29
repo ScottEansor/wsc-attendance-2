@@ -1,16 +1,12 @@
 import React, { useState, useMemo, useEffect } from "react";
-// ------review use effect with Tim and talk about function for review. make sure its dialed
+import "./utility.css"; // Ensure the path is correct
 
-//
 export default function AthleteHistory({ history }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedAthlete, setSelectedAthlete] = useState("");
-  //test make sure data collection correct with Tim
 
   const selectedAthleteAbsentDates = useMemo(() => {
     let absentDates = [];
-
-    // Loop through testAthletes to compare names and check if the athlete has a coach
     history.forEach((testAthlete) => {
       if (
         testAthlete.name.toLowerCase() === selectedAthlete.toLowerCase() &&
@@ -20,12 +16,11 @@ export default function AthleteHistory({ history }) {
       }
     });
     return absentDates;
-  }, [selectedAthlete]);
+  }, [selectedAthlete, history]);
 
   const filteredAthletes = useMemo(
     () => [
       ...new Set(
-        //set doesnt allow duplicate values in an array/ also a data structure type
         history
           .filter((athlete) =>
             athlete.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -33,47 +28,42 @@ export default function AthleteHistory({ history }) {
           .map((filteredAthlete) => filteredAthlete.name)
       ),
     ],
-    [searchTerm]
+    [searchTerm, history]
   );
 
   useEffect(() => {
     if (searchTerm) {
       setSelectedAthlete(filteredAthletes[0] || "");
     }
-  }, [filteredAthletes]);
-
-  // was just starting to try to solve the next div functionallity wise
-  // useEffect(() => {
-  //   if (absentAthleteCount > 3) {
-  //     displayAthleteHistory(selectedAthlete);
-  //   }
-  // }, [absentAthleteCount]);
+  }, [filteredAthletes, searchTerm]);
 
   return (
-    <div>
+    <div className="main-container p-3 mb-2">
       <input
         type="text"
         className="form-control"
-        placeholder="Search Athlete Data.."
+        placeholder="Search Athlete Data..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <select
-        className="form-select"
+        className="form-select custom-select"
         value={selectedAthlete}
         onChange={(e) => setSelectedAthlete(e.target.value)}
       >
         <option value="">Please select athlete</option>
-        {filteredAthletes.map((athlete) => {
-          return <option key={athlete}>{athlete}</option>;
-        })}
+        {filteredAthletes.map((athlete) => (
+          <option key={athlete}>{athlete}</option>
+        ))}
       </select>
       {selectedAthlete && (
         <>
-          <div>Days missed: {selectedAthleteAbsentDates.length}</div>
-          <div>
+          <div className="days-missed-container">
+            Days missed: {selectedAthleteAbsentDates.length}
+          </div>
+          <div className="dates-list-container">
             {selectedAthleteAbsentDates.map((selectedAthleteAbsentDate) => (
-              <div key={selectedAthleteAbsentDate}>
+              <div key={selectedAthleteAbsentDate} className="date-item">
                 {selectedAthleteAbsentDate}
               </div>
             ))}

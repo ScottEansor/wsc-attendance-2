@@ -1,5 +1,11 @@
-/* Date Display */
+/* General Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full height of the viewport */
+}
 
+/* Date Display */
 .date-display-container {
   text-align: center;
   margin: 20px;
@@ -17,47 +23,53 @@
   font-weight: bold;
 }
 
-  
 /* Coach Display */
 .coach-display-container {
-    text-align: center;
-    margin: 20px;
-  }
-  
-  .coach-select {
-    padding: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    background-color: #4a6885;
-    width: 80%;
-  }
-  
-
-  
-  .coach-select-dropdown {
-    padding: 10px;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
-    background-color: #4a6885;
-    width: 80%;
-    font-size: 16px;
-    font-weight: inherit;
-    cursor: pointer;
-  }
-/* Athlete Select */
-.athlete-list-container {
-  flex-grow: 1;
-  padding: 20px;
+  text-align: center;
+  margin: 20px;
 }
 
-.search-bar {
-  text-align: center;
+.coach-select {
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  width: 80%;
+}
+
+.coach-select-dropdown {
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  background-color: #7eafef;
+  width: 80%;
+  font-size: 16px;
+  font-weight: inherit;
+  cursor: pointer;
+}
+
+/* Athlete Select */
+.athlete-list-container {
+  display: flex;
+  flex-grow: 1;
+  padding: 20px;
+  overflow: hidden; /* Prevents overflowing content */
 }
 
 .absent-list,
 .present-list {
+  flex: 1; /* Takes equal space */
   height: 100%;
   overflow-y: auto;
+  border-radius: 10px;
+  margin: 0 10px; /* Space between lists */
+}
+
+.absent-list {
+  background-color: rgb(218, 134, 134);
+}
+
+.present-list {
+  background-color: rgb(134, 218, 134); /* Adjust color for clarity */
 }
 
 .absent-list h3,
