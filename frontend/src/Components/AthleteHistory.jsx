@@ -6,16 +6,13 @@ export default function AthleteHistory({ history }) {
   const [selectedAthlete, setSelectedAthlete] = useState("");
 
   const selectedAthleteAbsentDates = useMemo(() => {
-    let absentDates = [];
-    history.forEach((testAthlete) => {
-      if (
-        testAthlete.name.toLowerCase() === selectedAthlete.toLowerCase() &&
-        !testAthlete.coach
-      ) {
-        absentDates.push(testAthlete.date);
-      }
-    });
-    return absentDates;
+    return history
+      .filter(
+        (attendanceRecord) =>
+          attendanceRecord.name.toLowerCase() ===
+            selectedAthlete.toLowerCase() && !attendanceRecord.coach
+      )
+      .map((absentRecord) => absentRecord.date);
   }, [selectedAthlete, history]);
 
   const filteredAthletes = useMemo(

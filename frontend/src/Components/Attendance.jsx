@@ -9,13 +9,15 @@ export default function Attendance() {
   const [presentAthletes, setPresentAthletes] = useState([]);
 
   const validData = selectedDate && selectedCoach && presentAthletes.length > 0;
-
+  const onMarkPresent = (clickedAthlete) => {
+    setPresentAthletes((currentPresent) => [...currentPresent, clickedAthlete]);
+    const body = { selectedCoach, selectedDate, athlete: clickedAthlete };
+    console.log(body);
+  };
   const handleSubmit = () => {
     if (!validData) {
       return;
     }
-    const body = { selectedCoach, selectedDate, presentAthletes };
-    console.log(body);
   };
 
   return (
@@ -25,19 +27,12 @@ export default function Attendance() {
         onCoachChange={setSelectedCoach}
         selectedCoach={selectedCoach}
       />
-      <AthleteSelect
-        presentAthletes={presentAthletes}
-        setPresentAthletes={setPresentAthletes}
-      />
-      <div className="d-flex justify-content-center mt-3">
-        <button
-          className="btn btn-primary w-100"
-          onClick={handleSubmit}
-          disabled={!validData}
-        >
-          Submit
-        </button>
-      </div>
+      {selectedDate && selectedCoach && (
+        <AthleteSelect
+          presentAthletes={presentAthletes}
+          onMarkPresent={onMarkPresent}
+        />
+      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import "./Attendance.css";
 
-export default function AthleteSelect({ presentAthletes, setPresentAthletes }) {
+export default function AthleteSelect({ presentAthletes, onMarkPresent }) {
   const athletes = ["Tyson", "Winston", "Grayson", "Theo", "Stevey"];
   const [searchTerm, setSearchTerm] = useState("");
   // functions
@@ -10,7 +10,7 @@ export default function AthleteSelect({ presentAthletes, setPresentAthletes }) {
   };
 
   function handlePresent(clickedAthlete) {
-    setPresentAthletes((currentPresent) => [...currentPresent, clickedAthlete]);
+    onMarkPresent(clickedAthlete);
   }
 
   const filteredAthletes = useMemo(
