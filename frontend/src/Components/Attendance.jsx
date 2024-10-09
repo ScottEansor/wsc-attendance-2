@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DateDisplay from "./DateDisplay.jsx";
 import CoachDisplay from "./CoachDisplay.jsx";
 import AthleteSelect from "./AthleteSelect.jsx";
-import { saveAttendance } from "../api.js";
+import { saveAttendance } from "../api.js"; // api js import here to talk to backend :D
 
 export default function Attendance() {
   const [selectedDate, setSelectedDate] = useState("");
@@ -11,27 +11,22 @@ export default function Attendance() {
 
   const validData = selectedDate && selectedCoach && presentAthletes.length > 0;
 
-  const onMarkPresent = (clickedAthlete) => {
-    setPresentAthletes((currentPresent) => [...currentPresent, clickedAthlete]);
-    const body = { selectedCoach, selectedDate, athlete: clickedAthlete };
-    console.log(body);
-    handleSubmit();
-  };
-
-  const handleSubmit = async () => {
+  const onMarkPresent = async (clickedAthlete) => {
     if (!validData) {
       return;
     }
 
-    const attendanceData = {
-      selectedCoach,
-      selectedDate,
-      athletes: presentAthletes,
-    };
+    const body = { selectedCoach, selectedDate, athlete: clickedAthlete };
+    console.log(body);
 
     try {
-      const response = await saveAttendance(attendanceData);
+      const response = await saveAttendance(body);
       console.log("attendance saved:", response);
+
+      setPresentAthletes((currentPresent) => [
+        ...currentPresent,
+        clickedAthlete,
+      ]);
     } catch (err) {
       console.error("error saving attendance please check code");
     }

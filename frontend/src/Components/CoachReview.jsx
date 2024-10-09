@@ -2,35 +2,40 @@ import React, { useState } from "react";
 import DateDisplay from "./DateDisplay";
 import CoachDisplay from "./CoachDisplay";
 import AthleteReview from "./AthleteReview";
-
-// Sample data (This would normally come from a backend or state)
-const testAthletes = [
-  { name: "Tyson", coach: "Coach Tony", date: "2024-08-01" },
-  { name: "Winston", date: "2024-08-01" },
-  { name: "Grayson", coach: "Coach Tony", date: "2024-08-01" },
-  { name: "Theo", date: "2024-08-01" },
-  { name: "Stevey", coach: "Coach Tony", date: "2024-08-01" },
-  { name: "Tyson", coach: "Coach Tony", date: "2024-08-04" },
-  { name: "Winston", date: "2024-08-04" },
-  { name: "Grayson", coach: "Coach Tony", date: "2024-08-04" },
-  { name: "Theo", coach: "Coach Scotty", date: "2024-08-04" },
-  { name: "Stevey", coach: "Coach Tony", date: "2024-08-04" },
-];
+import { getAttendance } from "../api";
 
 export default function CoachReview() {
+  const [attendance, setAttendance] = useState(null);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedCoach, setSelectedCoach] = useState("");
 
+  //10/9/24 continue here api.js (reffer)
+  useEffect(() => {
+    let running = true;
+    async function fetchAttendance() {
+      const json = await getAttendance();
+      if (!running) return;
+      setAttendance(json);
+    }
+    fetchAttendance();
+    return () => {
+      running = false;
+    };
+  }, []);
+
   //still need some review on this ->
-  const filteredAthletes = testAthletes.filter(
+  const filteredAthletes = attendance?.filter(
     (athlete) =>
       athlete.date === selectedDate &&
       (!selectedCoach || !athlete.coach || athlete.coach === selectedCoach)
   );
 
-  const absentAthletes = filteredAthletes.filter((athlete) => !athlete.coach);
-  const presentAthletes = filteredAthletes.filter((athlete) => athlete.coach);
+  const absentAthletes = filteredAthletes?.filter((athlete) => !athlete.coach);
+  const presentAthletes = filteredAthletes?.filter((athlete) => athlete.coach);
 
+  if (attendance === null) {
+    return <div>Loading..</div>;
+  }
   return (
     <div>
       <DateDisplay onDateChange={setSelectedDate} selectedDate={selectedDate} />
