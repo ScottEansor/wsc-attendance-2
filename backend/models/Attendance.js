@@ -3,8 +3,7 @@ const mongoose = require("mongoose")
 //date array of attendance data? 
 //or jsut dates and we display that? probably in frontend
 const attendanceSchema = new mongoose.Schema({
-
-    attendance: []
+    date: { type: Date, required: true },
+    name: { type: String, required: true },
+    coach: { type: String, required: false },
 })
-
-const athleteSchema
