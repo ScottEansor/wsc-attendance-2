@@ -5,7 +5,7 @@ import AthleteReview from "./AthleteReview";
 import { getAttendance } from "../api";
 
 export default function CoachReview() {
-  const [attendance, setAttendance] = useState(null);
+  const [attendances, setAttendance] = useState(null);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedCoach, setSelectedCoach] = useState("");
 
@@ -13,7 +13,7 @@ export default function CoachReview() {
   useEffect(() => {
     let running = true;
     async function fetchAttendance() {
-      const json = await getAttendance();
+      const json = await getAttendance(selectedDate, selectedCoach);
       if (!running) return;
       setAttendance(json);
     }
@@ -21,19 +21,12 @@ export default function CoachReview() {
     return () => {
       running = false;
     };
-  }, []);
+  }, [selectedCoach, selectedDate]);
 
-  //still need some review on this ->
-  const filteredAthletes = attendance?.filter(
-    (athlete) =>
-      athlete.date === selectedDate &&
-      (!selectedCoach || !athlete.coach || athlete.coach === selectedCoach)
-  );
+  const absentAthletes = attendances?.filter((athlete) => !athlete.coach);
+  const presentAthletes = attendances?.filter((athlete) => athlete.coach);
 
-  const absentAthletes = filteredAthletes?.filter((athlete) => !athlete.coach);
-  const presentAthletes = filteredAthletes?.filter((athlete) => athlete.coach);
-
-  if (attendance === null) {
+  if (attendances === null) {
     return <div>Loading..</div>;
   }
   return (

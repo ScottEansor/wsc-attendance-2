@@ -7,8 +7,8 @@ export default function AthleteReview({ absentAthletes, presentAthletes }) {
         <h3>Absent</h3>
         <ul className="list-group">
           {absentAthletes.map((absentAthlete) => (
-            <li key={absentAthlete.name} className="list-group-item">
-              {absentAthlete.name}
+            <li key={absentAthlete.athlete} className="list-group-item">
+              {absentAthlete.athlete}
             </li>
           ))}
         </ul>
@@ -17,8 +17,8 @@ export default function AthleteReview({ absentAthletes, presentAthletes }) {
         <h3>Present</h3>
         <ul className="list-group">
           {presentAthletes.map((presentAthlete) => (
-            <li key={presentAthlete.name} className="list-group-item">
-              {presentAthlete.name}
+            <li key={presentAthlete.athlete} className="list-group-item">
+              {presentAthlete.athlete}
             </li>
           ))}
         </ul>

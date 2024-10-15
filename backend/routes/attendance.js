@@ -25,8 +25,8 @@ router.get('/:date', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const { date, name, coach } = req.body
-    if (!date || !name) {
+    const { date, athlete, coach } = req.body
+    if (!date || !athlete) {
         return res.status(400).json({ message: 'Date and name are required' })
     }
     const newAttendance = new Attendance({ date, name, coach })
