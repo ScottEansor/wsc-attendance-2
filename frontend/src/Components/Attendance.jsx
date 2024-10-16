@@ -37,17 +37,17 @@ export default function Attendance() {
       running = false;
     };
   }, [selectedDate, selectedCoach]);
-  //
+
   const onMarkPresent = async (clickedAthlete) => {
     if (!validData) {
       return;
     }
-
+    //
     const body = { selectedCoach, selectedDate, athlete: clickedAthlete };
     console.log(body);
 
     try {
-      await saveAttendance(body);
+      // await saveAttendance(body);
 
       setPresentAthletes((currentPresent) => [
         ...currentPresent,

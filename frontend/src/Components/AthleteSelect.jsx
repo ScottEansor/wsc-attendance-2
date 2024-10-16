@@ -1,10 +1,24 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { getAthletes } from "../api";
 import "./Attendance.css";
 
 export default function AthleteSelect({ presentAthletes, onMarkPresent }) {
-  const athletes = ["Tyson", "Winston", "Grayson", "Theo", "Stevey"];
   const [searchTerm, setSearchTerm] = useState("");
-  // functions
+  const [athletes, setAthletes] = useState(null);
+
+  useEffect(() => {
+    let running = true;
+    async function fetchAthletes() {
+      const json = await getAthletes();
+      if (!running) return;
+      setAthletes(json);
+    }
+    fetchAthletes();
+    return () => {
+      running = false;
+    };
+  }, []);
+
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -15,13 +29,17 @@ export default function AthleteSelect({ presentAthletes, onMarkPresent }) {
 
   const filteredAthletes = useMemo(
     () =>
-      athletes.filter(
-        (athlete) =>
-          !presentAthletes.includes(athlete) &&
-          athlete.toLowerCase().includes(searchTerm.toLowerCase())
+      athletes?.filter(
+        ({ name }) =>
+          !presentAthletes.includes(name) &&
+          name.toLowerCase().includes(searchTerm.toLowerCase())
       ),
     [athletes, searchTerm, presentAthletes]
   );
+
+  if (athletes === null) {
+    return <div>Loading..</div>;
+  }
 
   return (
     <div className="athlete-list-container container-fluid d-flex flex-column justify-between">
@@ -41,13 +59,14 @@ export default function AthleteSelect({ presentAthletes, onMarkPresent }) {
         <div className="absent-list flex-fill p-3">
           <h3>Absent</h3>
           <ul className="list-group">
-            {filteredAthletes.map((athlete) => (
+            {/* finishd here >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
+            {filteredAthletes.map(({ _id, name }) => (
               <li
-                key={athlete}
+                key={_id}
                 className="list-group-item list-group-item-action"
-                onClick={() => handlePresent(athlete)}
+                onClick={() => handlePresent(_id)}
               >
-                {athlete}
+                {name}
               </li>
             ))}
           </ul>
@@ -56,8 +75,8 @@ export default function AthleteSelect({ presentAthletes, onMarkPresent }) {
         <div className="present-list flex-fill p-3">
           <h3>Present</h3>
           <ul className="list-group">
-            {presentAthletes.map((athlete) => (
-              <li key={athlete} className="list-group-item">
+            {presentAthletes.map(({ athlete, _id = athlete }) => (
+              <li key={_id} className="list-group-item">
                 {athlete}
               </li>
             ))}

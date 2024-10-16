@@ -64,3 +64,14 @@ export async function getAttendance(date, coach) {
     // }
 }
 
+export async function getAthletes() {
+    const athletes = [
+        { _id: 1, name: 'Winston' },
+        { _id: 2, name: 'Tyson' },
+        { _id: 3, name: 'Grayson' },
+        { _id: 4, name: 'Theo' },
+        { _id: 5, name: 'Beau' },
+        { _id: 6, name: 'Tyler' }
+    ]
+    return athletes
+}
