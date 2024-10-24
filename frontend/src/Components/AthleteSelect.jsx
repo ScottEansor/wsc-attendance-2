@@ -43,7 +43,6 @@ export default function AthleteSelect({ presentAthletes, onMarkPresent }) {
 
   return (
     <div className="athlete-list-container container-fluid d-flex flex-column justify-between">
-      {/* search */}
       <div className="search-bar mb-3">
         <input
           type="text"
@@ -53,31 +52,27 @@ export default function AthleteSelect({ presentAthletes, onMarkPresent }) {
           onChange={handleSearch}
         />
       </div>
-      {/* lists */}
       <div className="d-flex flex-grow-1">
-        {/* abscent list */}
         <div className="absent-list flex-fill p-3">
           <h3>Absent</h3>
           <ul className="list-group">
-            {/* finishd here >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */}
             {filteredAthletes.map(({ _id, name }) => (
               <li
                 key={_id}
                 className="list-group-item list-group-item-action"
-                onClick={() => handlePresent(_id)}
+                onClick={() => handlePresent(_id, name)}
               >
                 {name}
               </li>
             ))}
           </ul>
         </div>
-        {/* present list */}
         <div className="present-list flex-fill p-3">
           <h3>Present</h3>
           <ul className="list-group">
-            {presentAthletes.map(({ athlete, _id = athlete }) => (
+            {presentAthletes.map(({ _id, name }) => (
               <li key={_id} className="list-group-item">
-                {athlete}
+                {name}
               </li>
             ))}
           </ul>

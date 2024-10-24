@@ -52,6 +52,7 @@ export default function Attendance() {
       setPresentAthletes((currentPresent) => [
         ...currentPresent,
         clickedAthlete,
+        { _id: clickedAthlete._id, name: clickedAthlete.name },
       ]);
     } catch (err) {
       console.error("error saving attendance please check code");
