@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import DateDisplay from "./DateDisplay.jsx";
 import CoachDisplay from "./CoachDisplay.jsx";
 import AthleteSelect from "./AthleteSelect.jsx";
-import { getAttendance, saveAttendance } from "../api.js"; // api js import here to talk to backend :D
+import { getAttendance, saveAttendance, getAthletes } from "../api.js"; // api js import here to talk to backend :D
 
 export default function Attendance() {
   const [selectedDate, setSelectedDate] = useState("");
@@ -14,22 +14,24 @@ export default function Attendance() {
   useEffect(() => {
     let running = true;
     async function fetchAttendance() {
-      const json = await getAttendance(selectedDate, selectedCoach);
-      if (!running) return;
-      setPresentAthletes(json);
-    }
-    fetchAttendance();
-  }, [selectedDate, selectedCoach]);
-
-  //
-  useEffect(() => {
-    let running = true;
-    async function fetchAttendance() {
       if (selectedDate && selectedCoach) {
-        // Only fetch when both date and coach are selected
         const json = await getAttendance(selectedDate, selectedCoach);
         if (!running) return;
-        setPresentAthletes(json); // Assuming you want to update present athletes with fetched data
+
+        // Map attendance data to include _id by finding athlete in athletes list
+        const allAthletes = await getAthletes();
+        const fullPresentAthletes = json
+          .map((attendance) => {
+            const athleteInfo = allAthletes.find(
+              (a) => a.name === attendance.athlete
+            );
+            return athleteInfo
+              ? { _id: athleteInfo._id, name: athleteInfo.name }
+              : null;
+          })
+          .filter(Boolean);
+
+        setPresentAthletes(fullPresentAthletes);
       }
     }
     fetchAttendance();
@@ -42,7 +44,12 @@ export default function Attendance() {
     if (!validData) {
       return;
     }
-    //
+    //check this with tim some again:
+    const isAlreadyPresent = presentAthletes.some(
+      (athlete) => athlete._id === clickedAthlete._id
+    );
+    if (isAlreadyPresent) return;
+
     const body = { selectedCoach, selectedDate, athlete: clickedAthlete };
     console.log(body);
 
@@ -52,7 +59,6 @@ export default function Attendance() {
       setPresentAthletes((currentPresent) => [
         ...currentPresent,
         clickedAthlete,
-        { _id: clickedAthlete._id, name: clickedAthlete.name },
       ]);
     } catch (err) {
       console.error("error saving attendance please check code");

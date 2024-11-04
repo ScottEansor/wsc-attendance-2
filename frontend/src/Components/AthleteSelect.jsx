@@ -30,9 +30,11 @@ export default function AthleteSelect({ presentAthletes, onMarkPresent }) {
   const filteredAthletes = useMemo(
     () =>
       athletes?.filter(
-        ({ name }) =>
-          !presentAthletes.includes(name) &&
-          name.toLowerCase().includes(searchTerm.toLowerCase())
+        (athlete) =>
+          //check some with Tim
+          athlete &&
+          !presentAthletes.some((present) => present._id === athlete._id) &&
+          athlete.name.toLowerCase().includes(searchTerm.toLowerCase())
       ),
     [athletes, searchTerm, presentAthletes]
   );
@@ -60,7 +62,7 @@ export default function AthleteSelect({ presentAthletes, onMarkPresent }) {
               <li
                 key={_id}
                 className="list-group-item list-group-item-action"
-                onClick={() => handlePresent(_id, name)}
+                onClick={() => handlePresent({ _id, name })}
               >
                 {name}
               </li>
