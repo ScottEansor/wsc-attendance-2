@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import DateDisplay from "./DateDisplay.jsx";
 import CoachDisplay from "./CoachDisplay.jsx";
 import AthleteSelect from "./AthleteSelect.jsx";
-import { getAttendance, saveAttendance, getAthletes } from "../api.js"; // api js import here to talk to backend :D
+import { getAttendance } from "../api.js"; // api js import here to talk to backend :D
 
 export default function Attendance() {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedCoach, setSelectedCoach] = useState("");
   const [presentAthletes, setPresentAthletes] = useState([]);
+  const [attendanceRecords, setAttendanceRecords] = useState(null);
 
   const validData = selectedDate && selectedCoach && presentAthletes.length > 0;
 
@@ -17,21 +18,7 @@ export default function Attendance() {
       if (selectedDate && selectedCoach) {
         const json = await getAttendance(selectedDate, selectedCoach);
         if (!running) return;
-
-        // Map attendance data to include _id by finding athlete in athletes list
-        const allAthletes = await getAthletes();
-        const fullPresentAthletes = json
-          .map((attendance) => {
-            const athleteInfo = allAthletes.find(
-              (a) => a.name === attendance.athlete
-            );
-            return athleteInfo
-              ? { _id: athleteInfo._id, name: athleteInfo.name }
-              : null;
-          })
-          .filter(Boolean);
-
-        setPresentAthletes(fullPresentAthletes);
+        setAttendanceRecords(json);
       }
     }
     fetchAttendance();
@@ -39,6 +26,22 @@ export default function Attendance() {
       running = false;
     };
   }, [selectedDate, selectedCoach]);
+
+  const { absent, present } = useMemo(() => {
+    if (attendanceRecords === null) {
+      return { absent: [], present: [] };
+    }
+    const absent = [];
+    const present = [];
+    for (let record of attendanceRecords) {
+      if (record.coach) {
+        present.push(record.athlete);
+      } else {
+        absent.push(record.athlete);
+      }
+    }
+    return { absent, present };
+  }, [attendanceRecords]);
 
   const onMarkPresent = async (clickedAthlete) => {
     if (!validData) {

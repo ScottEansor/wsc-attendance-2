@@ -22,18 +22,18 @@ export async function saveAttendance(attendanceData) {
 
 export async function getAttendance(date, coach) {
     const testAttendance = [
-        { athlete: "Tyson", coach: "Coach Tony", date: "2024-08-01" },
-        { athlete: "Winston", date: "2024-08-01" },
-        { athlete: "Grayson", coach: "Coach Tony", date: "2024-08-01" },
-        { athlete: "Theo", date: "2024-08-01" },
-        { athlete: "Stevey", coach: "Coach Tony", date: "2024-08-01" },
-        { athlete: "Tyson", coach: "Coach Tony", date: "2024-08-04" },
-        { athlete: "Winston", date: "2024-08-04" },
-        { athlete: "Grayson", coach: "Coach Tony", date: "2024-08-04" },
-        { athlete: "Theo", coach: "Coach Scotty", date: "2024-08-04" },
-        { athlete: "Stevey", coach: "Coach Tony", date: "2024-08-04" },
-        { athlete: "Winston", date: "2024-08-08" },
-        { athlete: "Winston", date: "2024-08-05" },
+        { _id: 1, athlete: { name: "Tyson", _id: 2 }, coach: "Coach Tony", date: "2024-08-01" },
+        { _id: 2, athlete: { name: "Winston", _id: 1 }, date: "2024-08-01" },
+        { _id: 3, athlete: { name: "Grayson", _id: 3 }, coach: "Coach Tony", date: "2024-08-01" },
+        { _id: 4, athlete: { name: "Theo", _id: 4 }, date: "2024-08-01" },
+        { _id: 5, athlete: { name: "Stevey", _id: 7 }, coach: "Coach Tony", date: "2024-08-01" },
+        { _id: 6, athlete: { name: "Tyson", _id: 2 }, coach: "Coach Tony", date: "2024-08-04" },
+        { _id: 7, athlete: { name: "Winston", _id: 1 }, date: "2024-08-04" },
+        { _id: 8, athlete: { name: "Grayson", _id: 3 }, coach: "Coach Tony", date: "2024-08-04" },
+        { _id: 9, athlete: { name: "Theo", _id: 4 }, coach: "Coach Scotty", date: "2024-08-04" },
+        { _id: 10, athlete: { name: "Stevey", _id: 7 }, coach: "Coach Tony", date: "2024-08-04" },
+        { _id: 11, athlete: { name: "Winston", _id: 1 }, date: "2024-08-08" },
+        { _id: 12, athlete: { name: "Winston", _id: 1 }, date: "2024-08-05" },
     ];
     const filteredAttendance = testAttendance.filter(
         (attendance) =>
@@ -71,7 +71,8 @@ export async function getAthletes() {
         { _id: 3, name: 'Grayson' },
         { _id: 4, name: 'Theo' },
         { _id: 5, name: 'Beau' },
-        { _id: 6, name: 'Tyler' }
+        { _id: 6, name: 'Tyler' },
+        { _id: 7, name: 'Stevey' }
     ]
     return athletes
 }

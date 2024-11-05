@@ -4,6 +4,6 @@ const mongoose = require("mongoose")
 //or jsut dates and we display that? probably in frontend
 const attendanceSchema = new mongoose.Schema({
     date: { type: Date, required: true },
-    athlete: { type: String, required: true },
-    coach: { type: String, required: true },
+    athlete: { type: mongoose.Types.ObjectId, required: true },
+    coach: { type: mongoose.Types.ObjectId, required: true },
 })
