@@ -2,15 +2,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import DateDisplay from "./DateDisplay.jsx";
 import CoachDisplay from "./CoachDisplay.jsx";
 import AthleteSelect from "./AthleteSelect.jsx";
-import { getAttendance } from "../api.js"; // api js import here to talk to backend :D
+import { getAttendance, saveAttendance } from "../api.js"; // api js import here to talk to backend :D
 
 export default function Attendance() {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedCoach, setSelectedCoach] = useState("");
-  const [presentAthletes, setPresentAthletes] = useState([]);
   const [attendanceRecords, setAttendanceRecords] = useState(null);
-
-  const validData = selectedDate && selectedCoach && presentAthletes.length > 0;
 
   useEffect(() => {
     let running = true;
@@ -35,7 +32,7 @@ export default function Attendance() {
     const present = [];
     for (let record of attendanceRecords) {
       if (record.coach) {
-        present.push(record.athlete);
+        present.push(record);
       } else {
         absent.push(record.athlete);
       }
@@ -49,9 +46,8 @@ export default function Attendance() {
       date: selectedDate,
       athlete: athleteId,
     };
-    console.log(body);
     try {
-      // await saveAttendance(body);
+      await saveAttendance(body);
       setAttendanceRecords((prevAttendanceRecords) =>
         prevAttendanceRecords.map((attendanceRecord) =>
           attendanceRecord.athlete._id === athleteId
@@ -62,6 +58,10 @@ export default function Attendance() {
     } catch (err) {
       console.error("error saving attendance please check code");
     }
+  };
+
+  const onMarkAbsent = async (attendanceRecordId) => {
+    console.log(attendanceRecordId);
   };
 
   return (
@@ -76,6 +76,7 @@ export default function Attendance() {
           presentAthletes={present}
           absentAthletes={absent}
           onMarkPresent={onMarkPresent}
+          onMarkAbsent={onMarkAbsent}
         />
       )}
     </div>
