@@ -1,26 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Attendance.css";
+import { getCoaches } from "../api";
 
 export default function CoachDisplay({ onCoachChange, selectedCoach }) {
-  const testCoaches = ["Coach Tony", "Coach Andy", "Coach Scotty"];
+  const [coaches, setCoaches] = useState(null);
+
+  useEffect(() => {
+    let running = true;
+    async function fetchCoaches() {
+      const json = await getCoaches();
+      if (!running) return;
+      setCoaches(json);
+    }
+    fetchCoaches();
+    return () => {
+      running = false;
+    };
+  }, []);
 
   function handleCoachSelectChange(e) {
     onCoachChange(e.target.value);
   }
 
   return (
-    //____________________this still need work. div isnt clickable. only drop down is, this can be confusing. Also need to eliminate/make better display for when coach is picked. Get functionallity and understanding first.
-
     <select
       id="coach-select"
       value={selectedCoach}
       onChange={handleCoachSelectChange}
       className="coach-select-dropdown"
     >
-      <option value="">{"Choose Coach"}</option>
-      {testCoaches.map((coach) => (
-        <option key={coach} value={coach}>
-          {coach}
+      <option value="">Choose Coach</option>
+      {coaches?.map(({ name, _id }) => (
+        <option key={_id} value={_id}>
+          {name}
         </option>
       ))}
     </select>

@@ -22,25 +22,26 @@ export async function saveAttendance(attendanceData) {
 
 export async function getAttendance(date, coach) {
     const testAttendance = [
-        { _id: 1, athlete: { name: "Tyson", _id: 2 }, coach: "Coach Tony", date: "2024-08-01" },
-        { _id: 2, athlete: { name: "Winston", _id: 1 }, date: "2024-08-01" },
-        { _id: 3, athlete: { name: "Grayson", _id: 3 }, coach: "Coach Tony", date: "2024-08-01" },
-        { _id: 4, athlete: { name: "Theo", _id: 4 }, date: "2024-08-01" },
-        { _id: 5, athlete: { name: "Stevey", _id: 7 }, coach: "Coach Tony", date: "2024-08-01" },
-        { _id: 6, athlete: { name: "Tyson", _id: 2 }, coach: "Coach Tony", date: "2024-08-04" },
-        { _id: 7, athlete: { name: "Winston", _id: 1 }, date: "2024-08-04" },
-        { _id: 8, athlete: { name: "Grayson", _id: 3 }, coach: "Coach Tony", date: "2024-08-04" },
-        { _id: 9, athlete: { name: "Theo", _id: 4 }, coach: "Coach Scotty", date: "2024-08-04" },
-        { _id: 10, athlete: { name: "Stevey", _id: 7 }, coach: "Coach Tony", date: "2024-08-04" },
-        { _id: 11, athlete: { name: "Winston", _id: 1 }, date: "2024-08-08" },
-        { _id: 12, athlete: { name: "Winston", _id: 1 }, date: "2024-08-05" },
+        { _id: "1", athlete: { name: "Tyson", _id: "2" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-01" },
+        { _id: "2", athlete: { name: "Winston", _id: "1" }, date: "2024-08-01" },
+        { _id: "3", athlete: { name: "Grayson", _id: "3" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-01" },
+        { _id: "4", athlete: { name: "Theo", _id: "4" }, date: "2024-08-01" },
+        { _id: "5", athlete: { name: "Stevey", _id: "7" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-01" },
+        { _id: "6", athlete: { name: "Tyson", _id: "2" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-04" },
+        { _id: "7", athlete: { name: "Winston", _id: "1" }, date: "2024-08-04" },
+        { _id: "8", athlete: { name: "Grayson", _id: "3" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-04" },
+        { _id: "9", athlete: { name: "Theo", _id: "4" }, coach: { name: "Coach Scotty", _id: "2" }, date: "2024-08-04" },
+        { _id: "10", athlete: { name: "Stevey", _id: "7" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-04" },
+        { _id: "11", athlete: { name: "Winston", _id: "1" }, date: "2024-08-08" },
+        { _id: "12", athlete: { name: "Winston", _id: "1" }, date: "2024-08-05" },
     ];
+    console.log(typeof coach)
     const filteredAttendance = testAttendance.filter(
         (attendance) =>
             attendance.date === date &&
             (!coach ||
                 !attendance.coach ||
-                attendance.coach === coach)
+                attendance.coach._id === coach)
     );
 
     return filteredAttendance
@@ -64,15 +65,25 @@ export async function getAttendance(date, coach) {
     // }
 }
 
-export async function getAthletes() {
-    const athletes = [
-        { _id: 1, name: 'Winston' },
-        { _id: 2, name: 'Tyson' },
-        { _id: 3, name: 'Grayson' },
-        { _id: 4, name: 'Theo' },
-        { _id: 5, name: 'Beau' },
-        { _id: 6, name: 'Tyler' },
-        { _id: 7, name: 'Stevey' }
+export async function getCoaches() {
+    const testCoaches = [
+        { name: "Coach Tony", _id: "1" },
+        { name: "Coach Andy", _id: "3" },
+        { name: "Coach Scotty", _id: "2" },
     ]
-    return athletes
+    return testCoaches
 }
+
+//maybe use?
+// export async function getAthletes() {
+//     const athletes = [
+//         { _id: 1, name: 'Winston' },
+//         { _id: 2, name: 'Tyson' },
+//         { _id: 3, name: 'Grayson' },
+//         { _id: 4, name: 'Theo' },
+//         { _id: 5, name: 'Beau' },
+//         { _id: 6, name: 'Tyler' },
+//         { _id: 7, name: 'Stevey' }
+//     ]
+//     return athletes
+// }

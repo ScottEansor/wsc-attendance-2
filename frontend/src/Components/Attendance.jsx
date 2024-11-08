@@ -43,26 +43,22 @@ export default function Attendance() {
     return { absent, present };
   }, [attendanceRecords]);
 
-  const onMarkPresent = async (clickedAthlete) => {
-    if (!validData) {
-      return;
-    }
-    //check this with tim some again:
-    const isAlreadyPresent = presentAthletes.some(
-      (athlete) => athlete._id === clickedAthlete._id
-    );
-    if (isAlreadyPresent) return;
-
-    const body = { selectedCoach, selectedDate, athlete: clickedAthlete };
+  const onMarkPresent = async (athleteId) => {
+    const body = {
+      coach: selectedCoach,
+      date: selectedDate,
+      athlete: athleteId,
+    };
     console.log(body);
-
     try {
       // await saveAttendance(body);
-
-      setPresentAthletes((currentPresent) => [
-        ...currentPresent,
-        clickedAthlete,
-      ]);
+      setAttendanceRecords((prevAttendanceRecords) =>
+        prevAttendanceRecords.map((attendanceRecord) =>
+          attendanceRecord.athlete._id === athleteId
+            ? { ...attendanceRecord, coach: selectedCoach }
+            : attendanceRecord
+        )
+      );
     } catch (err) {
       console.error("error saving attendance please check code");
     }
@@ -75,9 +71,10 @@ export default function Attendance() {
         onCoachChange={setSelectedCoach}
         selectedCoach={selectedCoach}
       />
-      {selectedDate && selectedCoach && (
+      {selectedDate && selectedCoach && attendanceRecords && (
         <AthleteSelect
-          presentAthletes={presentAthletes}
+          presentAthletes={present}
+          absentAthletes={absent}
           onMarkPresent={onMarkPresent}
         />
       )}

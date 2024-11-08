@@ -1,23 +1,12 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { getAthletes } from "../api";
 import "./Attendance.css";
 
-export default function AthleteSelect({ presentAthletes, onMarkPresent }) {
+export default function AthleteSelect({
+  presentAthletes,
+  onMarkPresent,
+  absentAthletes,
+}) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [athletes, setAthletes] = useState(null);
-
-  useEffect(() => {
-    let running = true;
-    async function fetchAthletes() {
-      const json = await getAthletes();
-      if (!running) return;
-      setAthletes(json);
-    }
-    fetchAthletes();
-    return () => {
-      running = false;
-    };
-  }, []);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -27,21 +16,13 @@ export default function AthleteSelect({ presentAthletes, onMarkPresent }) {
     onMarkPresent(clickedAthlete);
   }
 
-  const filteredAthletes = useMemo(
+  const filteredAbsentAthletes = useMemo(
     () =>
-      athletes?.filter(
-        (athlete) =>
-          //check some with Tim
-          athlete &&
-          !presentAthletes.some((present) => present._id === athlete._id) &&
-          athlete.name.toLowerCase().includes(searchTerm.toLowerCase())
+      absentAthletes?.filter((athlete) =>
+        athlete.name.toLowerCase().includes(searchTerm.toLowerCase())
       ),
-    [athletes, searchTerm, presentAthletes]
+    [searchTerm, absentAthletes]
   );
-
-  if (athletes === null) {
-    return <div>Loading..</div>;
-  }
 
   return (
     <div className="athlete-list-container container-fluid d-flex flex-column justify-between">
@@ -58,11 +39,11 @@ export default function AthleteSelect({ presentAthletes, onMarkPresent }) {
         <div className="absent-list flex-fill p-3">
           <h3>Absent</h3>
           <ul className="list-group">
-            {filteredAthletes.map(({ _id, name }) => (
+            {filteredAbsentAthletes.map(({ _id, name }) => (
               <li
                 key={_id}
                 className="list-group-item list-group-item-action"
-                onClick={() => handlePresent({ _id, name })}
+                onClick={() => handlePresent(_id)}
               >
                 {name}
               </li>
