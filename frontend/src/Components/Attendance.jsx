@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import DateDisplay from "./DateDisplay.jsx";
 import CoachDisplay from "./CoachDisplay.jsx";
 import AthleteSelect from "./AthleteSelect.jsx";
-import { getAttendance, saveAttendance } from "../api.js"; // api js import here to talk to backend :D
+import { getAttendance, markAsPresent } from "../api.js"; // api js import here to talk to backend :D
 
 export default function Attendance() {
   const [selectedDate, setSelectedDate] = useState("");
@@ -26,7 +26,7 @@ export default function Attendance() {
 
   const { absent, present } = useMemo(() => {
     if (attendanceRecords === null) {
-      return { absent: [], present: [] };
+      return { absent: null, present: null };
     }
     const absent = [];
     const present = [];
@@ -47,21 +47,35 @@ export default function Attendance() {
       athlete: athleteId,
     };
     try {
-      await saveAttendance(body);
+      const newAttendanceRecord = await markAsPresent(body);
       setAttendanceRecords((prevAttendanceRecords) =>
         prevAttendanceRecords.map((attendanceRecord) =>
           attendanceRecord.athlete._id === athleteId
-            ? { ...attendanceRecord, coach: selectedCoach }
+            ? newAttendanceRecord
             : attendanceRecord
         )
       );
     } catch (err) {
+      console.error(err);
       console.error("error saving attendance please check code");
     }
   };
 
   const onMarkAbsent = async (attendanceRecordId) => {
-    console.log(attendanceRecordId);
+    try {
+      //work on markAsAbsent --start here --
+      console.log(`Marking record ${attendanceRecordId} as absent`);
+      setAttendanceRecords((prevAttendanceRecords) =>
+        prevAttendanceRecords.map((attendanceRecord) => {
+          if (attendanceRecord._id === attendanceRecordId) {
+            return { ...attendanceRecord, coach: null, _id: null };
+          }
+          return attendanceRecord; // Keep other records unchanged
+        })
+      );
+    } catch (error) {
+      console.error("Failed to mark as absent:", error);
+    }
   };
 
   return (
@@ -71,7 +85,7 @@ export default function Attendance() {
         onCoachChange={setSelectedCoach}
         selectedCoach={selectedCoach}
       />
-      {selectedDate && selectedCoach && attendanceRecords && (
+      {present && absent && (
         <AthleteSelect
           presentAthletes={present}
           absentAthletes={absent}

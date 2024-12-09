@@ -1,5 +1,29 @@
-export async function saveAttendance(attendanceData) {
+import { v4 as uuid } from 'uuid'
+const testAttendance = [
+    { _id: "1", athlete: { name: "Tyson", _id: "2" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-01" },
+    { athlete: { name: "Winston", _id: "1" }, date: "2024-08-01" },
+    { _id: "3", athlete: { name: "Grayson", _id: "3" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-01" },
+    { athlete: { name: "Theo", _id: "4" }, date: "2024-08-01" },
+    { _id: "5", athlete: { name: "Stevey", _id: "7" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-01" },
+    { _id: "6", athlete: { name: "Tyson", _id: "2" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-04" },
+    { athlete: { name: "Winston", _id: "1" }, date: "2024-08-04" },
+    { _id: "8", athlete: { name: "Grayson", _id: "3" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-04" },
+    { _id: "9", athlete: { name: "Theo", _id: "4" }, coach: { name: "Coach Scotty", _id: "2" }, date: "2024-08-04" },
+    { _id: "10", athlete: { name: "Stevey", _id: "7" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-04" },
+    { athlete: { name: "Winston", _id: "1" }, date: "2024-08-08" },
+    { athlete: { name: "Winston", _id: "1" }, date: "2024-08-05" },
+];
+
+export async function markAsPresent(attendanceData) {
     console.log('saved atttendance data:', attendanceData)
+    const athleteData = testAttendance.find((attendanceRecord) => attendanceRecord.athlete._id === attendanceData.athlete)
+    const coachData = testAttendance.find((attendanceRecord) => attendanceRecord.coach?._id === attendanceData.coach)
+    return {
+        _id: uuid(),
+        athlete: athleteData.athlete,
+        coach: coachData.coach,
+        date: attendanceData.date
+    }
     // try {
     //     const response = await fetch('/api/attendances', {
     //         method: 'POST',
@@ -21,20 +45,7 @@ export async function saveAttendance(attendanceData) {
 }
 
 export async function getAttendance(date, coach) {
-    const testAttendance = [
-        { _id: "1", athlete: { name: "Tyson", _id: "2" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-01" },
-        { athlete: { name: "Winston", _id: "1" }, date: "2024-08-01" },
-        { _id: "3", athlete: { name: "Grayson", _id: "3" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-01" },
-        { athlete: { name: "Theo", _id: "4" }, date: "2024-08-01" },
-        { _id: "5", athlete: { name: "Stevey", _id: "7" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-01" },
-        { _id: "6", athlete: { name: "Tyson", _id: "2" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-04" },
-        { athlete: { name: "Winston", _id: "1" }, date: "2024-08-04" },
-        { _id: "8", athlete: { name: "Grayson", _id: "3" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-04" },
-        { _id: "9", athlete: { name: "Theo", _id: "4" }, coach: { name: "Coach Scotty", _id: "2" }, date: "2024-08-04" },
-        { _id: "10", athlete: { name: "Stevey", _id: "7" }, coach: { name: "Coach Tony", _id: "1" }, date: "2024-08-04" },
-        { athlete: { name: "Winston", _id: "1" }, date: "2024-08-08" },
-        { athlete: { name: "Winston", _id: "1" }, date: "2024-08-05" },
-    ];
+
     const filteredAttendance = testAttendance.filter(
         (attendance) =>
             attendance.date === date &&

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import "./Attendance.css";
 
 export default function AthleteSelect({
@@ -18,9 +18,13 @@ export default function AthleteSelect({
     onMarkPresent(clickedAthleteId);
   }
   function handleAbsent(clickedRecordId) {
+    console.log("setting id to delete:", clickedRecordId);
     setIdToDelete(clickedRecordId);
   }
-
+  function confirmAbsent() {
+    onMarkAbsent(idToDelete);
+    setIdToDelete(null);
+  }
   const filteredAbsentAthletes = useMemo(
     () =>
       absentAthletes?.filter((athlete) =>
@@ -28,41 +32,46 @@ export default function AthleteSelect({
       ),
     [searchTerm, absentAthletes]
   );
-
+  console.log("Present athletes:", presentAthletes);
   return (
     <>
       {idToDelete && (
-        <div class="modal show" tabindex="-1">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+        <div className="modal show" tabIndex="-1">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Confirm Absent</h5>
                 <button
                   type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
+                  className="btn-close"
+                  onClick={cancelAbsent}
                   aria-label="Close"
                 ></button>
               </div>
-              <div class="modal-body">
-                <p>Modal body text goes here.</p>
+              <div className="modal-body">
+                <p>Are you sure you want to mark this athlete as absent?</p>
               </div>
-              <div class="modal-footer">
+              <div className="modal-footer">
                 <button
                   type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
+                  className="btn btn-secondary"
+                  onClick={cancelAbsent}
                 >
-                  Close
+                  Cancel
                 </button>
-                <button type="button" class="btn btn-primary">
-                  Save changes
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={confirmAbsent}
+                >
+                  Confirm
                 </button>
               </div>
             </div>
           </div>
         </div>
       )}
+
       <div className="athlete-list-container container-fluid d-flex flex-column justify-between">
         <div className="search-bar mb-3">
           <input
