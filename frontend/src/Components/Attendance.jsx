@@ -2,18 +2,19 @@ import React, { useEffect, useMemo, useState } from "react";
 import DateDisplay from "./DateDisplay.jsx";
 import CoachDisplay from "./CoachDisplay.jsx";
 import AthleteSelect from "./AthleteSelect.jsx";
-import { getAttendance, markAsPresent } from "../api.js"; // api js import here to talk to backend :D
+import { getAllAthletes, getAttendance, markAsPresent } from "../api.js"; // api js import here to talk to backend :D
 
 export default function Attendance() {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedCoach, setSelectedCoach] = useState("");
   const [attendanceRecords, setAttendanceRecords] = useState(null);
+  const [athletes, setAthletes] = useState(null)
 
   useEffect(() => {
     let running = true;
     async function fetchAttendance() {
-      if (selectedDate && selectedCoach) {
-        const json = await getAttendance(selectedDate, selectedCoach);
+      if (selectedDate) {
+        const json = await getAttendance(selectedDate);
         if (!running) return;
         setAttendanceRecords(json);
       }
@@ -22,23 +23,50 @@ export default function Attendance() {
     return () => {
       running = false;
     };
-  }, [selectedDate, selectedCoach]);
+  }, [selectedDate]);
 
-  const { absent, present } = useMemo(() => {
-    if (attendanceRecords === null) {
-      return { absent: null, present: null };
+  useEffect(() => {
+    let running = true
+    async function fetchAthletes(){
+      const json = await getAllAthletes()
+      if(!running) return
+      setAthletes(json)
     }
-    const absent = [];
-    const present = [];
-    for (let record of attendanceRecords) {
-      if (record.coach) {
-        present.push(record);
-      } else {
-        absent.push(record.athlete);
-      }
+    fetchAthletes()
+    return () => {
+      running =false
     }
-    return { absent, present };
-  }, [attendanceRecords]);
+  },[])
+  // const { absent, present } = useMemo(() => {
+  //   if (attendanceRecords === null) {
+  //     return { absent: null, present: null };
+  //   }
+  //   const absent = [];
+  //   const present = [];
+  //   for (let record of attendanceRecords) {
+  //     if (record.coach) {
+  //       present.push(record);
+  //     } else {
+  //       absent.push(record.athlete);
+  //     }
+  //   }
+  //   return { absent, present };
+  // }, [attendanceRecords]);
+
+  const present = useMemo(() => {
+    if(!attendanceRecords || !selectedCoach){
+      return null
+    }
+    return attendanceRecords.filter((attendanceRecord)=>{
+      return attendanceRecord.coach._id === selectedCoach
+    })
+  }, [attendanceRecords, selectedCoach]);
+
+  //--start here 12/18--
+  const absent 
+  //calculate the absent based off the attendance records
+  //for each athlete if they do not have an entry in attendance records
+  //they are absent
 
   const onMarkPresent = async (athleteId) => {
     const body = {

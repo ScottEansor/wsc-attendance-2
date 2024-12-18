@@ -35,6 +35,7 @@ export default function AthleteSelect({
   console.log("Present athletes:", presentAthletes);
   return (
     <>
+      {/* MAKE SURE TO ADJUST THIS after we find out function as its wrong with adjustments now (the modal) */}
       {idToDelete && (
         <div className="modal show" tabIndex="-1">
           <div className="modal-dialog">
