@@ -8,7 +8,7 @@ export default function Attendance() {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedCoach, setSelectedCoach] = useState("");
   const [attendanceRecords, setAttendanceRecords] = useState(null);
-  const [athletes, setAthletes] = useState(null)
+  const [athletes, setAthletes] = useState(null);
 
   useEffect(() => {
     let running = true;
@@ -26,17 +26,17 @@ export default function Attendance() {
   }, [selectedDate]);
 
   useEffect(() => {
-    let running = true
-    async function fetchAthletes(){
-      const json = await getAllAthletes()
-      if(!running) return
-      setAthletes(json)
+    let running = true;
+    async function fetchAthletes() {
+      const json = await getAllAthletes();
+      if (!running) return;
+      setAthletes(json);
     }
-    fetchAthletes()
+    fetchAthletes();
     return () => {
-      running =false
-    }
-  },[])
+      running = false;
+    };
+  }, []);
   // const { absent, present } = useMemo(() => {
   //   if (attendanceRecords === null) {
   //     return { absent: null, present: null };
@@ -54,16 +54,32 @@ export default function Attendance() {
   // }, [attendanceRecords]);
 
   const present = useMemo(() => {
-    if(!attendanceRecords || !selectedCoach){
-      return null
+    if (!attendanceRecords || !selectedCoach) {
+      return null;
     }
-    return attendanceRecords.filter((attendanceRecord)=>{
-      return attendanceRecord.coach._id === selectedCoach
-    })
+    return attendanceRecords.filter((attendanceRecord) => {
+      return attendanceRecord.coach._id === selectedCoach;
+    });
   }, [attendanceRecords, selectedCoach]);
 
   //--start here 12/18--
-  const absent 
+  const absent = useMemo(() => {
+    if (!attendanceRecords || !athletes) {
+      return null;
+    }
+
+    const presentIds = attendanceRecords
+      .filter((attendanceRecord) => attendanceRecord.coach)
+      .map((attendanceRecord) => attendanceRecord.athlete._id);
+
+    const absentAthletes = athletes.filter(
+      (athlete) => !presentIds.includes(athlete._id)
+    );
+
+    console.log("Absent Athletes:", absentAthletes);
+    return absentAthletes;
+  }, [attendanceRecords, athletes]);
+  //tried for 20 min couldnt figure it out
   //calculate the absent based off the attendance records
   //for each athlete if they do not have an entry in attendance records
   //they are absent
